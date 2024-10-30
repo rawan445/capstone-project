@@ -19,7 +19,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest
-
+      
       - name: Run tests
         run: pytest
 
@@ -32,9 +32,10 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-        
-    - name: Build Docker image
-      run: docker build -t rawanalanazi/capstone-projectt:latest .
-    
-    - name: Push Docker image
-      run: docker push rawanalanazi/capstone-projectt:latest
+
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        push: true
+        tags: |
+          rawanalanazi/capstone-projectt:latest
