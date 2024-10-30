@@ -21,10 +21,11 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" > keypair.pem
           chmod 600 keypair.pem
-          ssh -i keypair.pem -o StrictHostKeyChecking=no $SSH_USERNAME@${{ matrix.nodes }} << 'EOF'
-            docker pull rawanalanazi/capstone-project:latest &&
-            docker stop web || true &&
-            docker rm web || true &&
-            docker run -d -p 80:5000 --name web --env-file .env rawanalanazi/capstone-project:latest
-            EOF
-            rm -f keypair.pem
+          ssh -i keypair.pem -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST"
+           docker pull rawanalanazi/capstone-project:latest &&
+           docker stop my_app_container || true  &&
+           docker rm my_app_container || true  &&
+           docker run -d -p 80:5000 --name web \
+           --env-file .env \ 
+          rawanalanazi/capstone-project:latest \
+           "
