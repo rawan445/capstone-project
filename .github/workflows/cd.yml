@@ -19,6 +19,6 @@ jobs:
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           SSH_HOST: ${{ matrix.nodes }}
         run: |
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/github_actions
-          chmod 600 ~/.ssh/github_actions
-          ssh -i $SSH_PRIVATE_KEY $SSH_USERNAME@$SSH_HOST
+          echo "$SSH_PRIVATE_KEY" > keypair.pem
+          chmod 600  keypair.pem
+          ssh -i  keypair.pem $SSH_USERNAME@$SSH_HOST
