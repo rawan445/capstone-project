@@ -21,4 +21,10 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" > keypair.pem
           chmod 600  keypair.pem
-          ssh -o StrictHostKeyChecking=no -i keypair.pem $SSH_USERNAME@${{ matrix.nodes }} 
+          ssh -o StrictHostKeyChecking=no -i keypair.pem $SSH_USERNAME@${{ matrix.nodes }} "
+          cd /capstone-flask && 
+          sudo docker pull rawanalanazi/capstone-projectt:latest &&
+          sudo docker stop web || true && 
+          sudo docker rm web || true && 
+          sudo docker run -d -p 80:5000 --name web --env-file .env rawanalanazi/capstone-project \
+          "
